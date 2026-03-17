@@ -1,0 +1,5 @@
+{
+  "buildCommand": "node generate-images-json.js",
+  "outputDirectory": ".",
+  "installCommand": "echo noop"
+}
