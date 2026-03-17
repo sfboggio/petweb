@@ -1,0 +1,9 @@
+# Exclude from Docker image
+.git
+.gitignore
+node_modules
+*.md
+# Large or unsupported files
+fotos/*.zip
+fotos/*.HEIC
+fotos/*.heic

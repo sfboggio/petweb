@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Galería de fotos de mascotas con votación para las más adorables y graciosas" />
+  <title>Pet Gallery UTN 🐾</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#f472b6" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+  <!-- Floating decorations -->
+  <div class="floaties" aria-hidden="true">
+    <span class="floaty">🐾</span>
+    <span class="floaty">✨</span>
+    <span class="floaty">🐾</span>
+    <span class="floaty">💖</span>
+    <span class="floaty">🐾</span>
+    <span class="floaty">⭐</span>
+    <span class="floaty">🐾</span>
+    <span class="floaty">💫</span>
+  </div>
+
+  <!-- ── HEADER ─────────────────────────────────────── -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="#carousel-section" class="logo">
+        <span class="logo-icon">🐾</span>
+        <span>Pet Gallery <span class="logo-utn">UTN</span></span>
+      </a>
+      <nav class="header-nav">
+        <a href="#carousel-section" class="nav-link">Galería</a>
+        <a href="#voting-section"   class="nav-link">Votar</a>
+        <a href="#results-section"  class="nav-link">Resultados</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ── HERO BANNER ──────────────────────────────── -->
+    <div class="hero-banner">
+      <div class="hero-content">
+        <div class="hero-badge">🏫 Universidad Tecnológica Nacional</div>
+        <h1 class="hero-title">Las mascotas de la <span class="hero-highlight">UTN</span> 🐾</h1>
+        <p class="hero-sub">Votá por tu favorita en las categorías más importantes 🥰😂</p>
+        <div class="hero-stats" id="heroStats">
+          <div class="stat-pill">📸 <span id="statPhotos">0</span> fotos</div>
+          <div class="stat-pill">🗳️ <span id="statVotes">0</span> votos</div>
+        </div>
+      </div>
+      <div class="hero-paws" aria-hidden="true">🐾🐾🐾</div>
+    </div>
+
+    <!-- ── 1. CARRUSEL ──────────────────────────────── -->
+    <section id="carousel-section" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Galería de fotos ✨</h2>
+        <p class="section-subtitle">Hacé click en la foto para verla completa</p>
+      </div>
+
+      <div class="carousel-wrapper" id="carouselWrapper">
+        <button class="carousel-btn carousel-btn--prev" id="carouselPrev" aria-label="Anterior">&#8249;</button>
+
+        <div class="carousel-track-container">
+          <div class="carousel-track" id="carouselTrack"></div>
+        </div>
+
+        <button class="carousel-btn carousel-btn--next" id="carouselNext" aria-label="Siguiente">&#8250;</button>
+
+        <div class="carousel-dots" id="carouselDots"></div>
+
+        <div class="empty-state" id="carouselEmpty" hidden>
+          <span class="empty-icon">📷</span>
+          <p>Aún no hay fotos en la carpeta <code>fotos/</code></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- wave divider -->
+    <div class="wave-divider" aria-hidden="true">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z"/></svg>
+    </div>
+
+    <!-- ── 2. VOTOS ──────────────────────────────────── -->
+    <section id="voting-section" class="section section--alt">
+      <div class="section-header">
+        <h2 class="section-title">¡Votá tus favoritas! 🗳️</h2>
+        <p class="section-subtitle">¿Cuál es la más adorable? ¿Y la más graciosa? ¡Hacé click en la foto para ampliarla!</p>
+      </div>
+
+      <div class="voting-grid" id="votingGrid"></div>
+
+      <div class="empty-state" id="votingEmpty" hidden>
+        <span class="empty-icon">🐶</span>
+        <p>No hay fotos para votar todavía.</p>
+      </div>
+    </section>
+
+    <!-- wave divider reversed -->
+    <div class="wave-divider wave-divider--rev" aria-hidden="true">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z"/></svg>
+    </div>
+
+    <!-- ── 3. RESULTADOS ─────────────────────────────── -->
+    <section id="results-section" class="section">
+      <div class="section-header">
+        <h2 class="section-title">¡Las ganadoras! 🏆</h2>
+        <p class="section-subtitle">Las fotos más votadas en cada categoría</p>
+      </div>
+
+      <div class="results-grid">
+        <div class="result-card result-card--adorable">
+          <div class="result-category">🥰 Más Adorable</div>
+          <div class="result-content" id="resultAdorableContent"></div>
+        </div>
+        <div class="result-card result-card--graciosa">
+          <div class="result-category">😂 Más Graciosa</div>
+          <div class="result-content" id="resultGraciosaContent"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── FOOTER ─────────────────────────────────────── -->
+  <footer class="site-footer">
+    <div class="footer-paws" aria-hidden="true">🐾 🐾 🐾</div>
+    <p>POWERED BY 🧙‍♂️ <a href="https://github.com/sfboggio" target="_blank" rel="noopener" class="footer-link">SANDALF</a> 🧙‍♂️ WITH ❤️</p>
+  </footer>
+
+  <!-- ── LIGHTBOX ────────────────────────────────────── -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Vista completa de foto" hidden>
+    <button class="lightbox-close" id="lightboxClose" aria-label="Cerrar">✕</button>
+    <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
+    <div class="lightbox-img-wrap">
+      <img src="" alt="Foto completa" id="lightboxImg" />
+      <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
