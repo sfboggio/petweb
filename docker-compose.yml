@@ -4,10 +4,7 @@ services:
     container_name: petgallery
     ports:
       - "8080:80"
-    # Mount fotos/ as a volume so you can add photos without rebuilding.
-    # Note: images.json is rebuilt at image build time; re-run
-    #   docker compose up --build
-    # after adding photos to fotos/.
-    volumes:
-      - ./fotos:/usr/share/nginx/html/fotos:ro
+    # fotos/ ya viene copiada y convertida dentro de la imagen (HEIC → JPG).
+    # Para agregar fotos: copiá los archivos a fotos/ y corré:
+    #   docker compose up -d --build
     restart: unless-stopped

@@ -3,7 +3,5 @@
 .gitignore
 node_modules
 *.md
-# Large or unsupported files
+# Exclude zips only (HEIC are now converted to JPG during build)
 fotos/*.zip
-fotos/*.HEIC
-fotos/*.heic

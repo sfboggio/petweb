@@ -1,11 +1,18 @@
-# ─── Stage 1: Generate images.json ───────────────────────────────────────────
+# ─── Stage 1: Convert HEIC → JPG + Generate images.json ─────────────────────
 FROM node:20-alpine AS builder
+
+# Install ImageMagick for HEIC conversion
+RUN apk add --no-cache imagemagick imagemagick-heic
 
 WORKDIR /app
 
-# Copy only what's needed to generate the image list
 COPY generate-images-json.js ./
 COPY fotos/ ./fotos/
+
+# Convert all HEIC/heic files to JPG and remove originals
+RUN for f in fotos/*.HEIC fotos/*.heic; do \
+      [ -f "$f" ] && magick "$f" "${f%.*}.jpg" && rm "$f" && echo "Converted: $f"; \
+    done; true
 
 RUN node generate-images-json.js
 
@@ -19,12 +26,14 @@ COPY app.js       /usr/share/nginx/html/
 COPY manifest.json        /usr/share/nginx/html/
 COPY service-worker.js    /usr/share/nginx/html/
 COPY icons/               /usr/share/nginx/html/icons/
-COPY fotos/               /usr/share/nginx/html/fotos/
+
+# Copy fotos from builder (HEIC already converted to JPG)
+COPY --from=builder /app/fotos/ /usr/share/nginx/html/fotos/
 
 # Copy the generated images.json from builder stage
 COPY --from=builder /app/images.json /usr/share/nginx/html/images.json
 
-# nginx config: serve from /usr/share/nginx/html, SPA-friendly
+# nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
